@@ -1,0 +1,37 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<h1>Register</h1>
+
+{% if error %}
+<div class="error">{{ error }}</div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Username:</label>
+        <input type="text" name="username" required>
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+    </div>
+    <div>
+        <label>Password:</label>
+        <input type="password" name="password" required>
+    </div>
+    <div>
+        <label>I am a:</label>
+        <select name="user_type" required>
+            <option value="buyer">Buyer</option>
+            <option value="vendor">Vendor</option>
+        </select>
+    </div>
+    <button type="submit">Register</button>
+</form>
+
+<p>Already have an account? <a href="{% url 'marketplace:login' %}">Login here</a></p>
+{% endblock %}

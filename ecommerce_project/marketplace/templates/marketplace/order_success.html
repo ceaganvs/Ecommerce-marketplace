@@ -1,0 +1,7 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<h1>Order Successful!</h1>
+<p>Thank you for your order! Your order number is #{{ order.id }}.</p>
+<p>An invoice has been sent to your email.</p>
+<p><a href="{% url 'marketplace:home' %}">Continue Shopping</a></p>
+{% endblock %}

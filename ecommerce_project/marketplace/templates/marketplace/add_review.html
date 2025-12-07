@@ -1,0 +1,24 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<h1>Write a Review for {{ product.name }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Rating:</label>
+        <select name="rating" required>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Average</option>
+            <option value="2">2 - Poor</option>
+            <option value="1">1 - Terrible</option>
+        </select>
+    </div>
+    <div><label>Comment:</label><textarea name="comment" required rows="5"></textarea></div>
+    <button type="submit">Submit Review</button>
+</form>
+{% if has_purchased %}
+<p><em>✓ This will be a verified review (you purchased this product)</em></p>
+{% else %}
+<p><em>This will be an unverified review (you haven't purchased this product)</em></p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<h1>Products in {{ store.name }}</h1>
+<a href="{% url 'marketplace:create_product' store.id %}"><button>Add New Product</button></a>
+{% if products %}
+<table>
+    <tr><th>Name</th><th>Price</th><th>Stock</th><th>Actions</th></tr>
+    {% for product in products %}
+    <tr>
+        <td>{{ product.name }}</td>
+        <td>R{{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+            <a href="{% url 'marketplace:edit_product' product.id %}">Edit</a> |
+            <a href="{% url 'marketplace:delete_product' product.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No products yet.</p>
+{% endif %}
+{% endblock %}

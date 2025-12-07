@@ -1,0 +1,33 @@
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+<p><strong>Price:</strong> R{{ product.price }}</p>
+<p><strong>Stock:</strong> {{ product.stock }}</p>
+<p><strong>Store:</strong> {{ product.store.name }}</p>
+<p>{{ product.description }}</p>
+
+{% if user.is_authenticated and user.groups.all.0.name == 'Buyers' %}
+<form method="post" action="{% url 'marketplace:add_to_cart' product.id %}">
+    {% csrf_token %}
+    <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}">
+    <button type="submit">Add to Cart</button>
+</form>
+{% endif %}
+
+<h2>Reviews</h2>
+{% if user.is_authenticated and user.groups.all.0.name == 'Buyers' %}
+<a href="{% url 'marketplace:add_review' product.id %}">Write a Review</a>
+{% endif %}
+
+{% for review in reviews %}
+<div class="review {% if review.verified %}verified{% endif %}">
+    <strong>{{ review.buyer.username }}</strong> {% if review.verified %}✓ Verified Purchase{% endif %}
+    <div class="stars">{% for i in "12345"|slice:":"|make_list %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+    <p>{{ review.comment }}</p>
+    <small>{{ review.created_at|date:"M d, Y" }}</small>
+</div>
+{% empty %}
+<p>No reviews yet.</p>
+{% endfor %}
+{% endblock %}

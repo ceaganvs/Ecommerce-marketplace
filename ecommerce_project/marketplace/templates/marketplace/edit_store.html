@@ -1,0 +1,10 @@
+{% extends 'marketplace/base.html' %}
+{% block content %}
+<h1>Edit Store</h1>
+<form method="post">
+    {% csrf_token %}
+    <div><label>Name:</label><input type="text" name="name" value="{{ store.name }}" required></div>
+    <div><label>Description:</label><textarea name="description">{{ store.description }}</textarea></div>
+    <button type="submit">Update Store</button>
+</form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'marketplace/base.html' %}
+
+{% block content %}
+<h1>Shopping Cart</h1>
+
+{% if error %}<div class="error">{{ error }}</div>{% endif %}
+
+{% if cart_items %}
+<table>
+    <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Action</th>
+    </tr>
+    {% for item in cart_items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>R{{ item.product.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>R{{ item.subtotal }}</td>
+        <td><a href="{% url 'marketplace:remove_from_cart' item.product.id %}">Remove</a></td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3"><strong>Total:</strong></td>
+        <td><strong>R{{ total }}</strong></td>
+        <td></td>
+    </tr>
+</table>
+
+<a href="{% url 'marketplace:checkout' %}"><button>Checkout</button></a>
+{% else %}
+<p>Your cart is empty.</p>
+{% endif %}
+
+<p><a href="{% url 'marketplace:home' %}">Continue Shopping</a></p>
+{% endblock %}

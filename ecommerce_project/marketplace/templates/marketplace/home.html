@@ -1,0 +1,26 @@
+{% extends 'marketplace/base.html' %}
+
+{% block title %}Marketplace Home{% endblock %}
+
+{% block content %}
+<h1>Welcome to Marketplace</h1>
+
+<h2>All Products</h2>
+
+{% if products %}
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description|truncatewords:15 }}</p>
+        <p class="price">R{{ product.price }}</p>
+        <p>Stock: {{ product.stock }}</p>
+        <p><small>Store: {{ product.store.name }}</small></p>
+        <a href="{% url 'marketplace:product_detail' product.id %}">View Details</a>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No products available yet.</p>
+{% endif %}
+{% endblock %}
